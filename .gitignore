@@ -482,12 +482,6 @@ FodyWeavers.xsd
 
 # Built Visual Studio Code Extensions
 *.vsix
-Temp/**
-stable config backup/**
-Appraiser/**
-SampleSpecData/**
-settings.db
-Preview/Preview.pdf
 
 # C++ objects and libs
 *.slo
@@ -543,3 +537,6 @@ compile_commands.json
 *creator.user*
 
 *_qmlcache.qrc
+
+
+To be translated/*
