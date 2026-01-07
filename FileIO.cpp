@@ -273,39 +273,49 @@ FileIOError FileIO::loadMannuallyTranslatedEntries(QString mannuallyTranslatedFi
 
 	if (!mannuallyTranslatedFile.open(QIODevice::ReadOnly))
 	{
-		qDebug() << "File not found : " << mannuallyTranslatedFileName << " . Please  re-check. " << mannuallyTranslatedFile.errorString() << endl;
+		qDebug() << "File not found :" << mannuallyTranslatedFileName << ". Please re-check." << mannuallyTranslatedFile.errorString() << endl;
 		return FileNotFound;
 	}
 
 	QTextStream mannualFileStream(&mannuallyTranslatedFile);
 
+	int lineNumber = 0;
+
 	while (!mannualFileStream.atEnd())
 	{
+
 		QString line = mannualFileStream.readLine();
+		++lineNumber; // <-- track line number here
 
 		if (line.trimmed().isEmpty())
+		{
 			continue;
+		}
 
 		QStringList fields = line.split(entrySeperator);
 
 		if (!line.startsWith(lineCommentString) && fields.size() != 2)
 		{
-			qDebug() << "Invalid file format : " << mannuallyTranslatedFileName << " at '" << line << "' . Please  re-check." << endl;
+			qDebug() << "Invalid file format in" << mannuallyTranslatedFileName << "at line" << lineNumber << "content:" << line << ". Please re-check." << endl;
+
 			return InvalidFile;
 		}
 
 		if (!line.startsWith(lineCommentString))
 		{
+
 			QString sourceText = fields.at(0).trimmed();
 			QString translatedText = fields.at(1).trimmed();
 
 			m_currentTranslationMap->insert(sourceText, translatedText);
 
-			// Remove if the translation is provided by the user
 			if (m_onlineTranslableWordList.contains(sourceText))
+			{
 				m_onlineTranslableWordList.removeOne(sourceText);
+			}
 		}
 	}
+
 	mannuallyTranslatedFile.close();
 	return ReadSuccess;
 }
