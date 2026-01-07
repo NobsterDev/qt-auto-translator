@@ -31,6 +31,7 @@ FileIOError FileIO::generateFile(int fileType, QString outputFileName)
 	if (fileType == TRANSLATABLE_FILE || fileType == ONLINE_FILE)
 	{
 		QTextStream outputStream(&outputFile);
+		outputStream.setCodec("UTF-8");
 
 		QList<std::map<QString, QStringList **> *> wordList;
 		QStringList sectionName;
@@ -225,6 +226,7 @@ FileIOError FileIO::translateWithTranslatedFile(QString translatableFileName /*=
 	}
 
 	QTextStream translatableFileStream(&translatableFile);
+	translatableFileStream.setCodec("UTF-8");
 
 	while (!translatableFileStream.atEnd())
 	{
@@ -241,6 +243,7 @@ FileIOError FileIO::translateWithTranslatedFile(QString translatableFileName /*=
 	}
 
 	QTextStream translatedFileStream(&translatedFile);
+	translatedFileStream.setCodec("UTF-8");
 
 	while (!translatedFileStream.atEnd())
 	{
@@ -278,6 +281,7 @@ FileIOError FileIO::loadMannuallyTranslatedEntries(QString mannuallyTranslatedFi
 	}
 
 	QTextStream mannualFileStream(&mannuallyTranslatedFile);
+	mannualFileStream.setCodec("UTF-8");
 
 	int lineNumber = 0;
 
